@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/cu0ngpitt/Learning-Express#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "lodash": "^4.17.5"
   },
   "devDependencies": {
     "nodemon": "^1.17.3"
