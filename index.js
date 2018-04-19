@@ -5,6 +5,19 @@ var fs = require('fs');
 var _ = require('lodash');
 var engines = require('consolidate');
 
+function getUserFilePath (username) {
+  return path.join(__dirname, 'users', username) + '.json';
+}
+
+function getUser (username) {
+  var user = JSON.parse(fs.readFileSync(getUserFilePath(username), {encoding: 'utf8'}))
+  user.name.full = _.startCase(user.name.first + ' ' + user.name.last)
+  _.keys(user.location).forEach(function (key) {
+    user.location[key] = _.startCase(user.location[key])
+  })
+  return user
+}
+
 var users = [];
 
 fs.readFile('users.json', {encoding: 'utf8'}, function(err, data) {
@@ -33,9 +46,13 @@ app.get(/big.*/, function(req, res, next) {
   next(); //the next() function tells express to go to the next route handler
 })
 
-app.get('/:username', function(req, res) {
-  var username = req.params.username;
-  res.render('user', {username: username});
+app.get('/:username', function (req, res) {
+  var username = req.params.username
+  var user = getUser(username)
+  res.render('user', {
+    user: user,
+    address: user.location
+  })
 })
 
 var server = app.listen(3000, function() {
