@@ -23,7 +23,7 @@
   <h1>Handlebars</h1>
   {{#each users as |user|}}
   <div>
-    <img src="{{user.username}}_sm.jpg" alt="">
+    <a href="/{{user.username}}"><img src="{{user.username}}_sm.jpg" alt=""></a>
     <a href="/{{user.username}}">{{user.name.full}}</a>
   </div>
   {{/each}}
